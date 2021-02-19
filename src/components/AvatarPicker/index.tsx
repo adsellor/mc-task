@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { TouchableOpacity, Image, View, Platform } from "react-native";
 import * as ImagePicker from "expo-image-picker";
+import { Ionicons } from "@expo/vector-icons";
 import avatarPickerStyles from "./avatarPickerStyles";
+import { primaryColor } from "../../consts/colors";
 
-const AvatarPicker = () => {
-  const [image, setImage] = useState<string | null>(null);
+interface AvatarPickerProps {
+  onImagePick?: (uri: string) => void;
+  photoUri?: string;
+}
+
+const AvatarPicker = ({ onImagePick, photoUri }: AvatarPickerProps) => {
+  const [image, setImage] = useState<string>();
 
   const _grantPermission = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -16,7 +23,7 @@ const AvatarPicker = () => {
 
   const pickImage = async () => {
     await _grantPermission();
-    
+
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
@@ -24,23 +31,24 @@ const AvatarPicker = () => {
       quality: 1,
     });
 
-    console.log(result);
-
-    if (!result.cancelled) {
+    if (!result.cancelled && onImagePick) {
       setImage(result.uri);
+      onImagePick(result.uri);
     }
   };
 
   return (
     <TouchableOpacity onPress={pickImage}>
-      {
+      {image || photoUri ? (
         <Image
           source={{
-            uri: image ?? "https://cdn.onlinewebfonts.com/svg/img_336524.png  ",
+            uri: photoUri || image,
           }}
           style={avatarPickerStyles.image}
         />
-      }
+      ) : (
+        <Ionicons size={200} color={primaryColor} name="image" />
+      )}
     </TouchableOpacity>
   );
 };

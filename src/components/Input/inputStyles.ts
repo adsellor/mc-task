@@ -8,8 +8,9 @@ const inputStyles =  StyleSheet.create({
     borderStyle: 'solid',
     borderColor: primaryColor,
     borderRadius: 30,
-    height: "6%",
+    height: 50,
     width: "100%",
+    marginTop: 10
   }
 });
 
