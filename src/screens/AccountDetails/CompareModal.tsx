@@ -19,7 +19,6 @@ const CompareModal = ({isOpen, personalDetails, compareDetails}: ICompareModalPr
       <Modal
       	animationType="slide"
       	visible={isOpen} >
-      <>
       <ListItem 
       	name={personalDetails.firstName} 
       	lastName={personalDetails.lastName} 
@@ -37,7 +36,6 @@ const CompareModal = ({isOpen, personalDetails, compareDetails}: ICompareModalPr
 	country={compareDetails.country}
 	jobTitleColor={_compareItems(personalDetails.jobTitle, compareDetails["job title"]) ? 'green' : 'red'}
 	/>
-	      </>
       </Modal>
   );
 }
