@@ -11,6 +11,10 @@ export enum AuthActionType {
   SetAuth = "SET_AUTH"
 }
 
+export enum SetLocaleActionType {
+  SetLocale = "SET_LOCALE"
+}
+
 export interface Action {
   type: string;
 }
@@ -48,3 +52,9 @@ export interface SetAuthAction extends Action {
     isSignedIn: boolean
   }
 } 
+
+export interface SetLocaleAction extends Action {
+  payload: {
+    locale: string
+  }
+}

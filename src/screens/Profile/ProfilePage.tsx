@@ -14,6 +14,7 @@ import { EmployeeResponseModel } from "../../api/responseTypes";
 import EmployeeList from "../../components/EmployeeList/EmployeeList";
 import { EmployeesContext } from "../../providers/EmployeesProvider";
 import { EmployeesActionType } from "../../reducers/reducerTypes";
+import i18n from "../../utils/locale.ts";
 
 const ProfilePage = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -52,7 +53,7 @@ const ProfilePage = () => {
         <View style={profileStyles.employeeListWrapper}>
           <EmployeeList data={employees} isSortable />
         </View>
-        <Button onPress={_save}> Save </Button>
+        <Button onPress={_save}> {i8n.t('save')} </Button>
       </>
     ) : (
       <View style={profileStyles.wrapper}>
@@ -63,9 +64,9 @@ const ProfilePage = () => {
         <Text style={profileStyles.infoText}>{personalData.location} </Text>
         <Text style={profileStyles.infoText}>{personalData.jobTitle} </Text>
         <Text style={profileStyles.infoText}>{personalData.email} </Text>
-        <Button onPress={copyData}>Copy Information</Button>
+        <Button onPress={copyData}>{i18n.t('copyInformation')}</Button>
         <Button onPress={() => setIsModalVisible(true)} color={secondaryColor}>
-          Edit Employee List
+		{i18n.t('editEmployeeList')}
         </Button>
       </View>
     ))
