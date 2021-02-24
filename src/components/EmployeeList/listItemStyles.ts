@@ -3,7 +3,7 @@ import { primaryColor, secondaryColor } from "../../consts/colors";
 
 import { ListItemProps } from "./ListItem";
 
-const createListItemStyles = ({ isSelected }: Partial<ListItemProps>) =>
+const createListItemStyles = ({ isSelected, jobTitleColor, departmentColor, countryColor }: Partial<ListItemProps>) =>
   StyleSheet.create({
     listItemWrapper: {
       backgroundColor: isSelected ? primaryColor : "white",
@@ -25,7 +25,17 @@ const createListItemStyles = ({ isSelected }: Partial<ListItemProps>) =>
     departmentText: {
         fontSize: 18,
         fontWeight: "500",
-        color: secondaryColor
+        color: departmentColor ?? secondaryColor,
+    },
+    jobTitleText: {
+        fontSize: 18,
+        fontWeight: "500",
+        color: jobTitleColor ?? secondaryColor,
+    },
+    countryText: {
+        fontSize: 18,
+        fontWeight: "500",
+        color: countryColor ?? secondaryColor,
     },
     genderText: {
         fontSize: 18,

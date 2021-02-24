@@ -13,6 +13,8 @@ import AvatarPicker from "../../components/AvatarPicker";
 import Button from "../../components/Button";
 import EmployeeList from "../../components/EmployeeList/EmployeeList";
 import Input from "../../components/Input";
+import CompareModal from "./CompareModal";
+
 import { secondaryColor } from "../../consts/colors";
 import { AccountDetailsContext } from "../../providers/AccountProvider";
 import { AccountDetailsProvider } from "../../providers/providerTypes";
@@ -30,6 +32,9 @@ const AccountDetailsPage = () => {
   const { details, dispatch } = useContext(AccountDetailsContext);
   const { employees } = useContext(EmployeesContext);
   const { dispatch: authDispatch } = useContext(AuthContext);
+
+  const [isCompareModalOpen, setIsCompareModalOpen] = useState(false);
+  const [compareItem, setCompareItem] = useState(0);
 
   const [firstName, setFirstName] = useState(
     details.firstStepDetails?.firstName ?? ""
@@ -162,6 +167,12 @@ const AccountDetailsPage = () => {
     setIsEmployeeListSortable(false);
   };
 
+  const _handleOnCompare = (_: any, id: number) => {
+  	setIsCompareModalOpen(!isCompareModalOpen);
+	setCompareItem(id);
+  }
+
+
   useEffect(() => {
     _fetchEmployees();
   }, [])
@@ -211,15 +222,14 @@ const AccountDetailsPage = () => {
             />
             <Input
               value={jobTitle}
-              onChangeText={setJobTitle}
-              placeholder="Job Title"
-            />
-          </View>
-        )}
+	      onChangeText={setJobTitle} 
+	      placeholder="Job Title" /> 
+	    </View>
+	    )}
         {(details.step === AccountDetailsProvider.Steps.ThirdStep ||
           details.step === AccountDetailsProvider.Steps.FourthStep) && (
           <View style={accountDetailsStyles.employeeListWrapper}>
-            <EmployeeList data={employeeData} isSortable={isEmployeeListSortable} />
+            <EmployeeList onCompare={_handleOnCompare} data={employeeData} isSortable={isEmployeeListSortable} />
           </View>
         )}
         <Button onPress={_handleNextPress}>Next step</Button>
@@ -229,6 +239,25 @@ const AccountDetailsPage = () => {
           </Button>
         )}
       </View>
+      {details.step === AccountDetailsProvider.Steps.ThirdStep && <CompareModal 
+      isOpen={isCompareModalOpen} 
+      personalDetails={{
+	      firstName,
+	      lastName,
+	      jobTitle,
+	      department,
+	      country: location
+      }}
+      compareDetails={{
+	      first_name: 'Rudolf',
+	      last_name: 'Stephens',
+	      ["job title"]: 'myjob',
+	      department: "It",
+	      country: "Armenia"
+	      
+      }}
+      />
+	      }
     </KeyboardAvoidingView>
   );
 };

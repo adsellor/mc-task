@@ -13,7 +13,7 @@ const Screens = () => {
 
   return (
     <NavigationContainer>
-      {isSignedIn ? <ProfileStack /> : <AccountDetailsStack />}
+      {!isSignedIn ? <ProfileStack /> : <AccountDetailsStack />}
     </NavigationContainer>
   );
 };

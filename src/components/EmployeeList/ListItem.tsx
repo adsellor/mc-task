@@ -8,11 +8,14 @@ export interface ListItemProps extends TouchableOpacityProps {
   name: string;
   lastName: string;
   department: string;
-  gender: string;
+  gender?: string;
   jobTitle: string;
-  country: string;
-  city: string;
-  email: string
+  country?: string;
+  city?: string;
+  email?: string;
+  departmentColor?: string;
+  jobTitleColor?: string;
+  countryColor?: string;
 }
 
 const ListItem = ({
@@ -39,9 +42,9 @@ const ListItem = ({
         <Text style={styles.genderText}>{email}</Text>
         <View>
           <Text style={styles.departmentText}>{department}</Text>
-          <Text style={styles.departmentText}>{jobTitle}</Text>
+          <Text style={styles.jobTitleText}>{jobTitle}</Text>
         </View>
-          <Text style={styles.departmentText}>{`${city}, ${country}`}</Text>
+          <Text style={styles.countryText}>{`${city}, ${country}`}</Text>
       </View>
     </TouchableOpacity>
   );

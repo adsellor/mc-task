@@ -4,6 +4,7 @@ import {
   ListRenderItem,
   View,
   VirtualizedList,
+  GestureResponderEvent,
 } from "react-native";
 import { getEmployeesList } from "../../api/employees";
 import { EmployeeResponseModel } from "../../api/responseTypes";
@@ -15,9 +16,10 @@ import SortableList from "./SortableList";
 interface EmployeeListProps {
   isSortable: boolean;
   data: EmployeeResponseModel[] | null;
+  onCompare?: (event: GestureResponderEvent, id: number) => void
 }
 
-const EmployeeList = ({ isSortable = false, data }: EmployeeListProps) => {
+const EmployeeList = ({ isSortable = false, data, onCompare }: EmployeeListProps) => {
   const [selectedItems, setSelectedItems] = useState<Set<number> | null>(null);
 
   const [sortedData, setSortedData] = useState<EmployeeResponseModel[]>();
@@ -52,6 +54,7 @@ const EmployeeList = ({ isSortable = false, data }: EmployeeListProps) => {
         city={item.city}
         country={item.country}
         email={item.email}
+	onLongPress={onCompare ? (e) => onCompare(e, item.id) :  () => null}
       />
     );
   };
